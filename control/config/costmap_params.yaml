@@ -1,0 +1,35 @@
+global_frame: map
+robot_base_frame: car/base_link
+
+update_frequency: 50.0
+publish_frequency: 50.0
+transform_tolerance: 0.1
+
+static_map: false
+rolling_window: true
+always_send_full_costmap: true
+
+plugins:
+  - {name: static_layer, type: "costmap_2d::StaticLayer"}
+  - {name: obstacle_layer, type: "costmap_2d::ObstacleLayer"}
+  - {name: inflated_layer, type: "costmap_2d::InflationLayer"}
+
+static_layer:
+  map_topic: /map
+  subscribe_to_updates: true
+
+obstacle_layer:
+  observation_sources: laser_scan
+  laser_scan:
+    data_type: LaserScan
+    topic: /car/scan
+    sensor_frame: car/laser_link
+    marking: true
+    clearing: true
+    expected_update_rate: 10.0
+    obstacle_range: 2.0
+    raytrace_range: 1.0
+    inf_is_valid: true
+
+inflated_layer:
+    inflation_radius: 0.1
