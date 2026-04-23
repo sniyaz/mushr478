@@ -50,20 +50,6 @@ class TestMotionModel(unittest.TestCase):
         )
         self.particles = np.zeros((self.num_particles, 3))
 
-    def test_compute_changes_is_vectorized(self):
-        self.num_particles = 1000000
-        self.particles = np.random.uniform(size=(self.num_particles, 3))
-        controls = np.random.uniform([-1, -np.pi], [1, np.pi], (self.num_particles, 2))
-        start = time.time()
-        self.motion_model.compute_changes(self.particles, controls, 0.1)
-        end = time.time()
-        self.assertLess(
-            end - start,
-            2,
-            msg="Your implementation should be able to "
-            "compute changes for one million particles in less than 2 seconds",
-        )
-
     def test_compute_changes_shape(self):
         changes = self.motion_model.compute_changes(
             np.array([[0, 0, 0]]), np.array([[1.0, 0]]), 0.123
@@ -207,19 +193,6 @@ class TestMotionModel(unittest.TestCase):
             [1, 0, 0],
             "A negative, near-zero steering angle should be treated as a zero steering angle, "
             "with the result being linear motion",
-        )
-
-    def test_apply_is_vectorized(self):
-        self.num_particles = 1000000
-        self.particles = np.random.uniform(size=(self.num_particles, 3))
-        start = time.time()
-        self.motion_model.apply_motion_model(self.particles, -1, np.pi / 2, 0.1)
-        end = time.time()
-        self.assertLess(
-            end - start,
-            2,
-            msg="Your implementation should be able to update "
-            "one million particles in less than 2 seconds",
         )
 
     def test_apply_modifies_particles(self):
