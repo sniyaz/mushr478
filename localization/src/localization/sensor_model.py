@@ -56,15 +56,15 @@ class SingleBeamSensorModel:
         (r, d) is the probability of observing measurement r when the simulated
         (expected) measurement is d.
 
-        You will need to normalize the table to ensure probabilities sum to 1, i.e.
-        sum P(r | d) over all r should be 1, for all d.
+        You will need to normalize the table to ensure every column sums to 1 (see
+        the lab directions for more info).
 
         Args:
             max_r (int): The maximum range (in pixels)
 
         Returns:
             prob_table: np.array of shape (max_r+1, max_r+1) containing
-                the sensor probabilities P(r | d), or P(z_t^k | z_t^k*) from lecture.
+                the sensor probabilities as described in the Lab 4 spec.
         """
         table_width = int(max_r) + 1
         prob_table = np.zeros((table_width, table_width))
