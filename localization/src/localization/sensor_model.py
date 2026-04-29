@@ -69,16 +69,9 @@ class SingleBeamSensorModel:
         table_width = int(max_r) + 1
         prob_table = np.zeros((table_width, table_width))
 
-        # Get matrices of the same shape as prob_table,
-        # where each entry holds the real measurement r (obs_r)
-        # or the simulated (expected) measurement d (sim_r).
-        obs_r, sim_r = np.mgrid[0:table_width, 0:table_width]
-
-        # Use obs_r and sim_r to vectorize the sensor model precomputation.
-        diff = sim_r - obs_r
-        # BEGIN QUESTION 2.1
-        "*** REPLACE THIS LINE ***"
-        # END QUESTION 2.1
+        # BEGIN LAB 4, Q1
+        "*** YOUR CODE HERE ***"
+        # END LAB 4, Q1
 
         return prob_table
 
