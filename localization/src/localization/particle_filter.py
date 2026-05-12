@@ -31,10 +31,11 @@ class ParticleInitializer:
         self.theta_std = theta_std
 
     def reset_click_pose(self, msg, particles, weights):
-        """Initialize the particles and weights in-place.
+        """Initialize the particles and weights **in-place**. That means modify the
+        last two arguments to this function.
 
         The particles should be sampled from a Gaussian distribution around the
-        initial pose. Remember to write vectorized code.
+        initial pose.
 
         Args:
             msg: a geometry_msgs/Pose message with the initial pose
@@ -43,9 +44,9 @@ class ParticleInitializer:
         """
         n_particles = particles.shape[0]
         # Hint: use utils.quaternion_to_angle to compute the orientation theta.
-        # BEGIN QUESTION 3.1
+        # BEGIN LAB 5 QUESTION 1
         "*** REPLACE THIS LINE ***"
-        # END QUESTION 3.1
+        # END LAB 5 QUESTION 1
 
 
 class ParticleFilter:
