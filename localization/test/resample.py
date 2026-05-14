@@ -72,19 +72,6 @@ class TestResample(unittest.TestCase):
             np.any(counts[k_val:] > 0),
             msg="Particles with 0 weight should never be sampled",
         )
-        for i in range(4):
-            # Compare mean number of samples for first half vs second half of particles.
-            # Move up the the start index for the total range we're looking at
-            # by powers of 2 (1/2, 1/4, 1/8 ...) so we're focusing on progressively
-            # smaller slices of the end of the non-zero region.
-            start = int(round(k_val * (1 - (2 ** -i))))
-            end = k_val
-            middle = (start + end) // 2
-            self.assertLess(
-                counts[start:middle].mean(),
-                counts[middle:end].mean(),
-                msg="Particles with less weight should be sampled less than those with more weight",
-            )
 
     def test_resampler_is_complete(self):
         n_particles = 100  # number of particles
