@@ -1,4 +1,4 @@
-# CS 7680 Labs
+# CS 6983 Labs
 
 ## Usage
 
