@@ -171,7 +171,7 @@ class PlannerROS:
 
         self.goal = np.array(utils.pose_to_particle(msg.pose))
         start = self._get_car_pose()
-        # if not self.multi_goals:
+        if not self.multi_goals:
            path_states = self.plan_to_goal(start, self.goal)
         if self.multi_goals:
             if self.route_sent:
