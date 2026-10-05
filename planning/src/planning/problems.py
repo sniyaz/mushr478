@@ -9,7 +9,7 @@ class PlanarProblem(object):
         """Construct a planar planning problem.
 
         Args:
-            permissible_region: Boolean np.array with shape map height x map width,
+            permissible_region: Boolean np.array with shape C-space height x C-space width,
                 where one indicates that the location is permissible
             map_info: map information, returned by get_map
             check_resolution: collision-checking resolution
@@ -42,32 +42,44 @@ class PlanarProblem(object):
         Returns:
             valid: np.array of Booleans with shape N
         """
+        # We break apart each configuration in the input to make your life a bit
+        # easier :)
         x = states[:, 0]
         y = states[:, 1]
-        valid = np.ones_like(x, dtype=bool)  # feel free to delete this line
+        # This is your final output!
+        valid = np.ones_like(x, dtype=bool)
 
-        # Check that x and y are within the extents of the map.
-        # BEGIN QUESTION 1.2
+        # Check that x and y are within the extents (bounds) of the configuration space.
+        # NOTE: The self.extents array is a bit confusing. The first row contains the
+        # lower and upper bounds on the X coordinate. The second row contains the same
+        # for the Y coordinate.
+        # NOTE: Each dimension of a robot state/configuration must be on:
+        # [lower_bound, upper_bound). Note  that the lower bound is inclusive, while
+        # the upper bound is **exclusive**!!!
+        # BEGIN Lab 7, Question 2
         "*** REPLACE THIS LINE ***"
-        # END QUESTION 1.2
+        # END Lab 7, Question 2 (And continued again below).
 
-        # The units of the state are meters and radians. We need to convert the
-        # meters to pixels, in order to index into the permissible region. This
-        # function converts them in place.
+        # More on this below.
         if self.map_info is not None:
             utils.world_to_map(states, self.map_info)
 
-        # For states within the extents of the map, collision check by reading
+        # For configurations within the extents (bounds), collision check by reading
         # the corresponding entry of self.permissible_region. For simplicity,
         # we'll assume the robot is a point robot: just index directly with the
         # robot state x and y pixel indices into self.permissible_region.
         #
-        # Hint: use the `astype` method to cast the x and y pixel positions into
+        # NOTE: When you checked extents/bounds above, the units of the C-space were
+        # in meters! But now we've converted the meters to pixels for you above using
+        # `world_to_map` **in place**. This should make it easier for you to index
+        # into the permissible region.
+        #
+        # HINT: convert (however you like) the x and y pixel positions into
         # integers. Then, index into self.permissible_region, remembering that
-        # the zeroth dimension is the height.
-        # BEGIN QUESTION 1.2
+        # the zeroth dimension is the height (and thus corresponds to **y**).
+        # BEGIN Lab 7, Question 2
         "*** REPLACE THIS LINE ***"
-        # END QUESTION 1.2
+        # END Lab 7, Question 2 (For real this time).
 
         # Convert the units back from pixels to meters for the caller
         if self.map_info is not None:
