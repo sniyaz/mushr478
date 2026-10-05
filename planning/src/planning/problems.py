@@ -34,7 +34,7 @@ class PlanarProblem(object):
     def check_state_validity(self, states):
         """Return whether states are valid.
 
-        Valid states are within the extents of the map and collision-free.
+        Valid states are within the extents of the C-space and collision-free.
 
         Args:
             states: np.array with shape N x D (where D may be 2 or 3)
