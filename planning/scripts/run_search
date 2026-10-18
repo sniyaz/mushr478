@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Script for running A* on R2 and SE2 problems without ROS."""
+"""Script for running PRM (Dijkstra) on R2 and SE2 problems without ROS."""
 
 from __future__ import print_function
 
@@ -36,13 +36,13 @@ def main(args):
     goal_id = rm.add_node(goal, is_start=False)
 
     try:
-        if args.algorithm == "astar":
+        if args.algorithm in ("dijkstra", "prm"):
             # Print some graph summary statistics
             print("Lazy:", rm.lazy)
             print("Vertices:", rm.num_vertices)
             print("Edges:", rm.weighted_edges.shape[0])
-            print("Running A*")
-            vpath, _ = search.astar(rm, start_id, goal_id)
+            print("Running PRM")
+            vpath, _ = search.dijkstra(rm, start_id, goal_id)
         elif args.algorithm == "rrt":
             print("Running RRT")
             print("Bias:", args.bias)
@@ -61,8 +61,8 @@ def main(args):
 
     rm.visualize(show_edges=args.show_edges, vpath=vpath)
 
-    if args.shortcut and args.algorithm == "astar":
-        print("Shortcutting A* path")
+    if args.shortcut and args.algorithm in ("dijkstra", "prm"):
+        print("Shortcutting path")
         start_time = time.time()
         vpath = search.shortcut(rm, vpath)
         end_time = time.time()
@@ -73,13 +73,13 @@ def main(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
-        description="test (lazy) A* or RRT or RRT* on R2 and SE2 problems"
+        description="test (lazy) PRM (Dijkstra) or RRT or RRT* on R2 and SE2 problems"
     )
     parser.add_argument("-m", "--text-map", type=str, help="the environment to plan on")
     # algorithm
     parser.add_argument("--sampler", type=str, default="halton", choices=samplers)
-    parser.add_argument("--algorithm", type=str, default="astar", choices=["astar", "rrt"])
-    # A* parameters
+    parser.add_argument("--algorithm", type=str, default="prm", choices=["prm", "dijkstra", "rrt"])
+    # PRM parameters
     parser.add_argument("-n", "--num-vertices", type=int, default=10)
     parser.add_argument("-r", "--connection-radius", type=float, default=1.0)
     parser.add_argument("--lazy", action="store_true")

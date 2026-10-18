@@ -35,7 +35,7 @@ if(CATKIN_ENABLE_TESTING)
 
   catkin_add_nosetests(test/samplers.py)
   catkin_add_nosetests(test/roadmap.py)
-  catkin_add_nosetests(test/astar.py)
+  catkin_add_nosetests(test/dijkstra.py)
   catkin_add_nosetests(test/shortcut.py)
 
   # add_rostest tests the ROS integrations

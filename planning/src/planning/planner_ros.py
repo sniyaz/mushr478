@@ -118,12 +118,12 @@ class PlannerROS:
             return None
         # self.rm.visualize(saveto="graph.png")
 
-        # Call the Lazy A* planner
+        # Call the Lazy PRM planner (Dijkstra)
         try:
             rospy.loginfo("Planning...")
             start_edges_evaluated = self.rm.edges_evaluated
             start_time = time.time()
-            path, _ = search.astar(self.rm, start_id, goal_id)
+            path, _ = search.dijkstra(self.rm, start_id, goal_id)
             end_time = time.time()
             edges_evaluated = self.rm.edges_evaluated - start_edges_evaluated
             rospy.loginfo("Path length: {}".format(self.rm.compute_path_length(path)))

@@ -28,16 +28,16 @@ class TestShortcut(unittest.TestCase):
         goal_id = rm.add_node(np.array([8, 8]), is_start=False)
         correct_path = [start_id, 9, 2, 7, goal_id]
 
-        path, _ = search.astar(rm, start_id, goal_id)
+        path, _ = search.dijkstra(rm, start_id, goal_id)
         np.testing.assert_almost_equal(
             rm.compute_path_length(path),
             rm.compute_path_length(correct_path),
-            err_msg="A* implementation is incorrect",
+            err_msg="Dijkstra implementation is incorrect",
         )
         self.assertEqual(
             path,
             correct_path,
-            msg="A* implementation is incorrect",
+            msg="Dijkstra implementation is incorrect",
         )
 
         shortcut_path = search.shortcut(rm, path)

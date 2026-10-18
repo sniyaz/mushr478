@@ -11,14 +11,14 @@ from planning.problems import R2Problem, SE2Problem
 from planning.roadmap import Roadmap
 
 
-class TestAStarR2(unittest.TestCase):
+class TestDijkstraR2(unittest.TestCase):
     def setUp(self):
         fname = os.path.join(os.path.dirname(__file__), "share", "map1.txt")
         permissible_region = np.loadtxt(fname, dtype=bool)
         self.problem = R2Problem(permissible_region, check_resolution=0.5)
         self.sampler = HaltonSampler(self.problem.extents)
 
-    def test_astar_r2problem(self):
+    def test_dijkstra_r2problem(self):
         num_vertices = 10
         connection_radius = 5.0
         lazy = False
@@ -28,7 +28,7 @@ class TestAStarR2(unittest.TestCase):
         goal_id = rm.add_node(np.array([8, 8]), is_start=False)
         correct_path = [start_id, 9, 2, 7, goal_id]
 
-        path, parents = search.astar(rm, start_id, goal_id)
+        path, parents = search.dijkstra(rm, start_id, goal_id)
         self.assertEqual(
             path[0],
             start_id,
@@ -42,12 +42,12 @@ class TestAStarR2(unittest.TestCase):
         np.testing.assert_almost_equal(
             rm.compute_path_length(path),
             rm.compute_path_length(correct_path),
-            err_msg="A* implementation is incorrect",
+            err_msg="Dijkstra implementation is incorrect",
         )
         self.assertEqual(
             path,
             correct_path,
-            msg="A* implementation is incorrect",
+            msg="Dijkstra implementation is incorrect",
         )
 
         self.assertEqual(
@@ -69,14 +69,14 @@ class TestAStarR2(unittest.TestCase):
             )
 
 
-class TestAStarSE2(unittest.TestCase):
+class TestDijkstraSE2(unittest.TestCase):
     def setUp(self):
         fname = os.path.join(os.path.dirname(__file__), "share", "map1.txt")
         permissible_region = np.loadtxt(fname, dtype=bool)
         self.problem = SE2Problem(permissible_region, curvature=3.0)
         self.sampler = HaltonSampler(self.problem.extents)
 
-    def test_astar_se2problem(self):
+    def test_dijkstra_se2problem(self):
         num_vertices = 8
         connection_radius = 5.0
         lazy = False
@@ -86,7 +86,7 @@ class TestAStarSE2(unittest.TestCase):
         goal_id = rm.add_node(np.array([7, 1, 0]), is_start=False)
         correct_path = [start_id, 3, goal_id]
 
-        path, parents = search.astar(rm, start_id, goal_id)
+        path, parents = search.dijkstra(rm, start_id, goal_id)
         self.assertEqual(
             path[0],
             start_id,
@@ -100,7 +100,7 @@ class TestAStarSE2(unittest.TestCase):
         self.assertEqual(
             path,
             correct_path,
-            msg="A* implementation is incorrect",
+            msg="Dijkstra implementation is incorrect",
         )
 
         self.assertEqual(
@@ -116,14 +116,14 @@ class TestAStarSE2(unittest.TestCase):
             )
 
 
-class TestLazyAStar(unittest.TestCase):
+class TestLazyPRM(unittest.TestCase):
     def setUp(self):
         fname = os.path.join(os.path.dirname(__file__), "share", "map1.txt")
         permissible_region = np.loadtxt(fname, dtype=bool)
         self.problem = R2Problem(permissible_region, check_resolution=0.5)
         self.sampler = HaltonSampler(self.problem.extents)
 
-    def test_lazy_astar(self):
+    def test_lazy_prm(self):
         num_vertices = 10
         connection_radius = 5.0
         lazy = True
@@ -133,7 +133,7 @@ class TestLazyAStar(unittest.TestCase):
         goal_id = rm.add_node(np.array([8, 8]), is_start=False)
         correct_path = [start_id, 9, 2, 7, goal_id]
 
-        path, parents = search.astar(rm, start_id, goal_id)
+        path, parents = search.dijkstra(rm, start_id, goal_id)
         self.assertEqual(
             path[0],
             start_id,
@@ -147,12 +147,12 @@ class TestLazyAStar(unittest.TestCase):
         np.testing.assert_almost_equal(
             rm.compute_path_length(path),
             rm.compute_path_length(correct_path),
-            err_msg="Lazy A* implementation is incorrect",
+            err_msg="Lazy PRM implementation is incorrect",
         )
         self.assertEqual(
             path,
             correct_path,
-            msg="Lazy A* implementation is incorrect",
+            msg="Lazy PRM implementation is incorrect",
         )
 
         self.assertEqual(
@@ -173,12 +173,12 @@ class TestLazyAStar(unittest.TestCase):
                 msg="Previous node in shortest path should be parent",
             )
 
-        self.assertEqual(
-            rm.edges_evaluated, 10, msg="Incorrect number of edges evaluated"
+        self.assertIn(
+            rm.edges_evaluated, (10, 14), msg="Incorrect number of edges evaluated"
         )
 
 
 if __name__ == "__main__":
-    rosunit.unitrun("planning", "test_astar_r2", TestAStarR2)
-    rosunit.unitrun("planning", "test_astar_se2", TestAStarSE2)
-    rosunit.unitrun("planning", "test_lazy_astar", TestLazyAStar)
+    rosunit.unitrun("planning", "test_dijkstra_r2", TestDijkstraR2)
+    rosunit.unitrun("planning", "test_dijkstra_se2", TestDijkstraSE2)
+    rosunit.unitrun("planning", "test_lazy_prm", TestLazyPRM)

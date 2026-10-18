@@ -1,4 +1,4 @@
-"""Implementation of (Lazy) A* and shortcutting."""
+"""Implementation of (Lazy) Dijkstra and shortcutting."""
 
 import collections
 import numpy as np
@@ -9,20 +9,20 @@ from cse478.utils import PriorityQueue
 
 
 # Entries in the PriorityQueue are prioritized in lexicographic order, i.e.  by
-# the first element of QueueEntry (the f-value). Ties are broken by proceeding
+# the first element of QueueEntry (the cost). Ties are broken by proceeding
 # to the next element, a unique counter. This prevents the underlying
 # PriorityQueue from breaking ties by comparing nodes. QueueEntry objects
 # contain the node, a possible parent, and cost-to-come via that parent. These
 # can be accessed via dot notation, e.g. `entry.node`.
 QueueEntry = collections.namedtuple(
     "QueueEntry",
-    ["f_value", "counter", "node", "parent", "cost_to_come"],
+    ["cost", "counter", "node", "parent", "cost_to_come"],
 )
 
 NULL = -1
 
 
-def astar(rm, start, goal):
+def dijkstra(rm, start, goal):
     """Compute the shortest path from start to goal on a roadmap.
 
     Args:
@@ -46,7 +46,7 @@ def astar(rm, start, goal):
 
     c = count()
     queue = PriorityQueue()
-    queue.push(QueueEntry(rm.heuristic(start, goal), next(c), start, NULL, 0))
+    queue.push(QueueEntry(0, next(c), start, NULL, 0))
 
     while len(queue) > 0:
         entry = queue.pop()
@@ -70,14 +70,13 @@ def astar(rm, start, goal):
             return path, parents
 
         for neighbor, w in rm.graph[entry.node].items():
-            # Get the edge weight (length) and heuristic value
+            # Get the edge weight (length)
             weight = w.get("weight")
-            h = rm.heuristic(neighbor, goal)
 
             # Compute this neighbor's cost-to-come via entry.node, and insert a
             # new QueueEntry.
             #
-            # Since this may be Lazy A*, it is misleading to compare the f-value
+            # Since this may be Lazy PRM, it is misleading to compare the cost
             # against any current QueueEntry objects for this neighbor that are
             # already in the queue. Those may turn out to be in collision and
             # therefore unusable. Therefore, this entry should be inserted even
