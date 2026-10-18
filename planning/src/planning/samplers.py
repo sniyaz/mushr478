@@ -57,10 +57,10 @@ class HaltonSampler(Sampler):
         # from our zero-indexed Halton sequence.
         index += 1
 
-        # BEGIN QUESTION 1.1
+        # BEGIN Lab 7, Q1
         "*** REPLACE THIS LINE ***"
         raise NotImplementedError
-        # END QUESTION 1.1
+        # END Lab 7, Q1
 
     def make_base_generator(self, base):
         """Generate the Halton sequence for a desired base."""
@@ -89,10 +89,10 @@ class HaltonSampler(Sampler):
             batch[i, :] = x
 
         # Scale the batch of samples to fit the extents of the space.
-        # BEGIN QUESTION 1.1
+        # BEGIN Lab 7, Q1
         "*** REPLACE THIS LINE ***"
         raise NotImplementedError
-        # END QUESTION 1.1
+        # END Lab 7, Q1
 
 
 class LatticeSampler(Sampler):

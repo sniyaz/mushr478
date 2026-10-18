@@ -87,10 +87,10 @@ class Roadmap(object):
                 rows that correspond to collision-free edges are preserved
         """
         # Hint: call the check_edge_validity method from above.
-        # BEGIN QUESTION 1.3
+        # BEGIN Lab 8, Q1
         "*** REPLACE THIS LINE ***"
         raise NotImplementedError
-        # END QUESTION 1.3
+        # END Lab 8, Q1
         return weighted_edges
 
     def construct(self):

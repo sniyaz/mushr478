@@ -56,9 +56,9 @@ class PlanarProblem(object):
         # NOTE: Each dimension of a robot state/configuration must be on:
         # [lower_bound, upper_bound). Note  that the lower bound is inclusive, while
         # the upper bound is **exclusive**!!!
-        # BEGIN Lab 7, Question 2
+        # BEGIN Lab 7, Q2
         "*** REPLACE THIS LINE ***"
-        # END Lab 7, Question 2 (And continued again below).
+        # END Lab 7, Q2 (And continued again below).
 
         # More on this below.
         if self.map_info is not None:
@@ -77,9 +77,9 @@ class PlanarProblem(object):
         # HINT: convert (however you like) the x and y pixel positions into
         # integers. Then, index into self.permissible_region, remembering that
         # the zeroth dimension is the height (and thus corresponds to **y**).
-        # BEGIN Lab 7, Question 2
+        # BEGIN Lab 7, Q2
         "*** REPLACE THIS LINE ***"
-        # END Lab 7, Question 2 (For real this time).
+        # END Lab 7, Q2 (For real this time).
 
         # Convert the units back from pixels to meters for the caller
         if self.map_info is not None:
