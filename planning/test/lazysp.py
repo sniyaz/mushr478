@@ -51,7 +51,7 @@ class TestLazySPR2(unittest.TestCase):
                 msg="Every edge on the returned path must be collision-free",
             )
 
-        # Lazy PRM evaluates 14 edges on this problem; LazySP should only need 10.
+        # LazySP should only need 10 edges on this problem.
         self.assertEqual(
             rm.edges_evaluated, 10, msg="Incorrect number of edges evaluated"
         )
