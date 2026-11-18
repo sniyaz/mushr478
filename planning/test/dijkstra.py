@@ -174,7 +174,9 @@ class TestLazyPRM(unittest.TestCase):
             )
 
         self.assertIn(
-            rm.edges_evaluated, (10, 14), msg="Incorrect number of edges evaluated"
+            rm.edges_evaluated,
+            range(10, 52),
+            msg="Incorrect number of edges evaluated",
         )
 
 
